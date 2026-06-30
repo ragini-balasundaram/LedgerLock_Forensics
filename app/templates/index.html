@@ -2,65 +2,40 @@
 
 {% block content %}
 <div class="max-w-6xl mx-auto space-y-8">
-    
-    <div class="flex justify-between items-end">
-        <div>
-            <h1 class="text-2xl font-bold dark:text-white">Forensic Operations Overview</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Monitoring active digital evidence chains and system integrity.</p>
-        </div>
-        <div class="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full border border-green-200 dark:border-green-800/50">
-            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            System Status: OPERATIONAL
-        </div>
-    </div>
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm transition-colors duration-200">
-            <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Open Cases</h3>
-            <div class="text-4xl font-bold dark:text-white mb-2">24</div>
-            <p class="text-xs text-brand font-medium">4 urgent priority &nearr; +12%</p>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm">
+            <h3 class="text-xs font-bold text-gray-500 uppercase">Open Cases</h3>
+            <div class="text-4xl font-bold dark:text-white">{{ open_cases }}</div>
         </div>
-        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm transition-colors duration-200">
-            <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Total Evidence Logged</h3>
-            <div class="text-4xl font-bold dark:text-white mb-2">1,402</div>
-            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Last 30 days activity</p>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm">
+            <h3 class="text-xs font-bold text-gray-500 uppercase">Total Evidence</h3>
+            <div class="text-4xl font-bold dark:text-white">{{ total_evidence }}</div>
         </div>
-        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm transition-colors duration-200">
-            <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Pending Transfers</h3>
-            <div class="text-4xl font-bold dark:text-white mb-2">08</div>
-            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Awaiting verification &searr; -2%</p>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm">
+            <h3 class="text-xs font-bold text-gray-500 uppercase">Pending Transfers</h3>
+            <div class="text-4xl font-bold dark:text-white">{{ pending_transfers }}</div>
         </div>
     </div>
 
-    <div class="bg-white dark:bg-darkCard rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm overflow-hidden transition-colors duration-200">
-        <div class="px-6 py-5 border-b border-gray-200 dark:border-darkBorder flex justify-between items-center">
-            <h2 class="text-base font-bold dark:text-white flex items-center gap-2">
-                <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Recent Chain of Custody Activity
-            </h2>
-        </div>
-        <table class="w-full text-left text-sm">
-            <thead class="bg-gray-50 dark:bg-[#181a20] text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">
+    <div class="bg-white dark:bg-darkCard rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50 dark:bg-[#181a20] text-gray-500 uppercase text-xs">
                 <tr>
-                    <th class="px-6 py-4 font-semibold">Evidence Tag</th>
-                    <th class="px-6 py-4 font-semibold">Case ID</th>
-                    <th class="px-6 py-4 font-semibold">Action</th>
-                    <th class="px-6 py-4 font-semibold">Timestamp (UTC)</th>
+                    <th class="px-6 py-4">Evidence Tag</th>
+                    <th class="px-6 py-4">Action</th>
+                    <th class="px-6 py-4">Timestamp</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-darkBorder">
-                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
-                    <td class="px-6 py-4 font-medium dark:text-gray-200"><span class="w-2 h-2 inline-block rounded-full bg-brand mr-2"></span>E-4092-B</td>
-                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">CASE-2024-0012</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 text-[10px] font-bold uppercase rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">Transferred</span></td>
-                    <td class="px-6 py-4 text-gray-500">2024-05-18 14:22:10</td>
+                {% for log in recent_activity %}
+                <tr>
+                    <td class="px-6 py-4">{{ log.evidence.evidence_tag }}</td>
+                    <td class="px-6 py-4">{{ log.purpose }}</td>
+                    <td class="px-6 py-4">{{ log.transfer_date.strftime('%Y-%m-%d %H:%M') }}</td>
                 </tr>
-                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
-                    <td class="px-6 py-4 font-medium dark:text-gray-200"><span class="w-2 h-2 inline-block rounded-full bg-blue-500 mr-2"></span>HD-9912-X</td>
-                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">CASE-2024-0009</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 text-[10px] font-bold uppercase rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400">Logged</span></td>
-                    <td class="px-6 py-4 text-gray-500">2024-05-18 13:45:02</td>
-                </tr>
+                {% else %}
+                <tr><td colspan="3" class="px-6 py-4 text-center">No recent activity found.</td></tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

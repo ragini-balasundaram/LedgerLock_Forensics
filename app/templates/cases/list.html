@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+    
+    <div class="flex justify-between items-end">
+        <div>
+            <h1 class="text-2xl font-bold dark:text-white">Active Investigations</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage and view all registered forensic cases.</p>
+        </div>
+        <a href="{{ url_for('cases.new_case') }}" class="bg-brand hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors shadow-lg">
+            + New Case
+        </a>
+    </div>
+
+    <div class="bg-white dark:bg-darkCard rounded-xl border border-gray-200 dark:border-darkBorder shadow-sm overflow-hidden">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50 dark:bg-[#181a20] text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">
+                <tr>
+                    <th class="px-6 py-4 font-semibold">Case Number</th>
+                    <th class="px-6 py-4 font-semibold">Title</th>
+                    <th class="px-6 py-4 font-semibold">Status</th>
+                    <th class="px-6 py-4 font-semibold">Date Opened</th>
+                    <th class="px-6 py-4 font-semibold">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-darkBorder">
+                {% for case in cases %}
+                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    <td class="px-6 py-4 font-medium dark:text-gray-200">{{ case.case_number }}</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">{{ case.title }}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 text-[10px] font-bold uppercase rounded-md bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                            {{ case.status }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">{{ case.opened_date.strftime('%Y-%m-%d') if case.opened_date else 'N/A' }}</td>
+                    <td class="px-6 py-4">
+                        <a href="#" class="text-brand hover:text-indigo-400 font-medium">View &rarr;</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">No active cases found. Create one to get started.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
