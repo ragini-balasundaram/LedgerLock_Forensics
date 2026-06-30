@@ -4,6 +4,7 @@ from flask_login import LoginManager # <-- ADD THIS
 from flask import render_template
 from flask_login import login_required
 
+
 db = SQLAlchemy()
 login_manager = LoginManager() # <-- ADD THIS
 
@@ -32,5 +33,8 @@ def create_app():
 
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
+    
+    from app.routes.evidence import evidence_bp
+    app.register_blueprint(evidence_bp)
 
     return app
