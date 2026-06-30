@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LedgerLock Forensics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#5b6cf9',
+                        darkBg: '#12141c',
+                        darkCard: '#1e2028',
+                        darkBorder: '#2d313f'
+                    }
+                }
+            }
+        }
+        
+        // Dark Mode Toggle Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on startup
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 font-sans antialiased flex h-screen overflow-hidden transition-colors duration-200">
+
+    <aside class="w-64 bg-white dark:bg-darkCard border-r border-gray-200 dark:border-darkBorder flex flex-col justify-between transition-colors duration-200">
+        <div>
+            <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-darkBorder text-xl font-bold tracking-wide text-brand">
+                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                LedgerLock
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="/" class="flex items-center px-4 py-3 bg-brand/10 text-brand rounded-lg font-medium">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    Dashboard
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Evidence Vault
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-gray-200 dark:border-darkBorder flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-white font-bold">A</div>
+            <div>
+                <p class="text-sm font-bold dark:text-white">{{ current_user.username if current_user.is_authenticated else 'Admin' }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Chief Investigator</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen">
+        <header class="h-16 bg-white dark:bg-darkCard border-b border-gray-200 dark:border-darkBorder flex items-center justify-between px-8 transition-colors duration-200">
+            <div class="w-96">
+                <input type="text" placeholder="Search Cases, Evidence Tags..." class="w-full bg-gray-100 dark:bg-darkBg border border-gray-300 dark:border-darkBorder text-sm rounded-md px-4 py-2 outline-none focus:border-brand dark:text-white transition-colors">
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 rounded-md bg-gray-100 dark:bg-darkBg border border-gray-300 dark:border-darkBorder text-gray-600 dark:text-gray-400 hover:text-brand transition-colors" title="Toggle Dark/Light Mode">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+                <button class="bg-brand hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors shadow-lg">
+                    Initialize New Case
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+</body>
+</html>

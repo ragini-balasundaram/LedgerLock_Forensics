@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager # <-- ADD THIS
+from flask import render_template
+from flask_login import login_required
 
 db = SQLAlchemy()
 login_manager = LoginManager() # <-- ADD THIS
@@ -24,8 +26,9 @@ def create_app():
         return User.query.get(int(user_id))
 
     @app.route('/')
+    @login_required 
     def index():
-        return "<h2>LedgerLock Forensics Server is Running! 🔐</h2>"
+        return render_template('index.html')
 
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
