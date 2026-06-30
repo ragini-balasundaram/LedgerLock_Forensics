@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LedgerLock - Secure Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: '#000000',
+                        cardDark: '#1e2028',
+                        inputDark: '#14151a',
+                        brandBlue: '#5b6cf9',
+                        brandBlueHover: '#4a59d4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bgDark min-h-screen flex flex-col items-center justify-center font-sans antialiased text-gray-200">
+
+    <div class="absolute top-6 left-8 flex items-center gap-2 text-gray-400 font-bold text-xl tracking-wide">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        LedgerLock
+    </div>
+
+    <div class="bg-cardDark w-full max-w-[420px] rounded-xl p-8 sm:p-10 shadow-2xl border border-gray-800 relative z-10">
+        
+        <div class="w-16 h-16 rounded-full bg-[#272a35] border border-gray-700 flex items-center justify-center mx-auto mb-6">
+            <svg class="w-7 h-7 text-brandBlue" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-white mb-2">Secure Login</h1>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">LedgerLock — Digital Forensics Case Management</p>
+        </div>
+
+        <form method="POST" action="/login" class="space-y-5">
+            <div>
+                <label for="email" class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide">Email Address</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <input type="email" name="email" id="email" required class="w-full bg-inputDark border border-gray-700 text-gray-200 text-sm rounded-md focus:ring-brandBlue focus:border-brandBlue block pl-10 p-3 outline-none transition-colors" placeholder="name@company.com">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </div>
+                    <input type="password" name="password" id="password" required class="w-full bg-inputDark border border-gray-700 text-gray-200 text-sm rounded-md focus:ring-brandBlue focus:border-brandBlue block pl-10 pr-10 p-3 outline-none transition-colors" placeholder="Enter your password">
+                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </button>
+                </div>
+                <div class="text-right mt-2">
+                    <a href="#" class="text-[11px] text-gray-400 hover:text-gray-200 transition-colors">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full text-white bg-brandBlue hover:bg-brandBlueHover focus:ring-4 focus:outline-none focus:ring-brandBlue/50 font-medium rounded-md text-sm px-5 py-3 text-center transition-all flex justify-center items-center gap-2">
+                Login
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="text-center pt-4">
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">Login with SSO / SAML</a>
+            </div>
+
+            <div class="mt-6 flex items-center justify-center gap-2 border border-gray-700/50 bg-gray-800/30 rounded-full py-1.5 px-3 w-max mx-auto text-[10px] text-gray-400">
+                <svg class="w-3 h-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                Connection encrypted &bull; Authorized personnel only
+            </div>
+        </form>
+    </div>
+
+    <div class="absolute bottom-6 w-full text-center text-[10px] text-gray-600 font-medium tracking-widest uppercase">
+        &copy; 2026 LedgerLock Enterprise Systems <br>
+        <span class="inline-block mt-2 space-x-3">
+            <a href="#" class="hover:text-gray-400">Privacy Policy</a>
+            <span>&bull;</span>
+            <a href="#" class="hover:text-gray-400">Terms of Service</a>
+            <span>&bull;</span>
+            <a href="#" class="hover:text-gray-400">Security Disclosure</a>
+        </span>
+    </div>
+
+</body>
+</html>

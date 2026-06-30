@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime
+from flask_login import UserMixin
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -7,9 +8,10 @@ class Role(db.Model):
     role_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     role_name = db.Column(db.String(50), nullable=False, unique=True)
     
+    # Relationship to User
     users = db.relationship('User', backref='role', lazy=True)
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -23,6 +25,10 @@ class User(db.Model):
     cases_led = db.relationship('Case', backref='lead_investigator', lazy=True)
     evidence_collected = db.relationship('Evidence', backref='collector', lazy=True)
 
+    # Required by Flask-Login to manage sessions based on our custom primary key
+    def get_id(self):
+        return str(self.user_id)
+
 class Case(db.Model):
     __tablename__ = 'cases'
     
@@ -35,7 +41,7 @@ class Case(db.Model):
     opened_date = db.Column(db.Date, default=datetime.utcnow)
     closed_date = db.Column(db.Date)
     
-    # When a case is deleted, we cascade and delete its evidence (in a real app we'd soft-delete, but we'll keep it simple)
+    # Cascade delete means if a case is deleted, its evidence is deleted too
     evidence_items = db.relationship('Evidence', backref='case', lazy=True, cascade="all, delete-orphan")
 
 class Evidence(db.Model):
@@ -64,7 +70,7 @@ class ChainOfCustody(db.Model):
     transfer_date = db.Column(db.DateTime, default=datetime.utcnow)
     purpose = db.Column(db.String(150), nullable=False)
     
-    # We specify foreign keys explicitly here because there are two relationships pointing to the User table
+    # Specify foreign keys explicitly because two relationships point to the User table
     from_user = db.relationship('User', foreign_keys=[from_user_id], backref='transfers_given')
     to_user = db.relationship('User', foreign_keys=[to_user_id], backref='transfers_received')
 
