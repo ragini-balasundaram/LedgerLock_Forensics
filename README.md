@@ -39,16 +39,18 @@ Built with a lightweight, robust architecture focusing on MVC design patterns:
 
 ## 📸 Screenshots
 
-*(Replace these placeholders with your actual project screenshots/GIFs)*
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400?text=Dashboard+Screenshot" alt="Dashboard Screen">
+
   <p><i>Dashboard showing open cases and recent alerts.</i></p>
   
+  <img width="959" height="500" alt="Screenshot 2026-07-01 000155" src="https://github.com/user-attachments/assets/0b6f80b5-7578-4165-88c4-42929c53acd1" />
   <br>
 
-  <img src="https://via.placeholder.com/800x400?text=Chain+of+Custody+Log" alt="Chain of Custody Screen">
-  <p><i>Provable chain of custody transfer log.</i></p>
+
+  <p><i>Initialise new secure evidence to establish chain of custody</i></p>
+  <img width="958" height="503" alt="Screenshot 2026-07-01 000246" src="https://github.com/user-attachments/assets/a3becb97-bfef-4c5f-8073-7cb4291e172d" />
+  
 </div>
 
 ---
